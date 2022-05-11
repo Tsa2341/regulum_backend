@@ -38,6 +38,11 @@
 	"author": "Tsa2341",
 	"license": "MIT",
 	"dependencies": {
+		"@babel/cli": "^7.17.6",
+		"@babel/core": "^7.17.5",
+		"@babel/node": "^7.16.8",
+		"@babel/plugin-proposal-class-properties": "^7.16.7",
+		"@babel/plugin-transform-runtime": "^7.17.0",
 		"@sendgrid/mail": "^7.6.2",
 		"bcrypt": "^5.0.1",
 		"better-npm-run": "^0.1.1",
@@ -55,14 +60,10 @@
 		"nodemailer": "^6.7.5",
 		"paseto": "^3.1.0",
 		"sequelize": "^6.17.0",
-		"uuid": "^8.3.2",
-		"@babel/cli": "^7.17.6",
-		"@babel/core": "^7.17.5",
-		"@babel/node": "^7.16.8",
-		"@babel/plugin-proposal-class-properties": "^7.16.7",
-		"@babel/plugin-transform-runtime": "^7.17.0"
+		"uuid": "^8.3.2"
 	},
 	"devDependencies": {
+		"@babel/preset-env": "^7.17.10",
 		"nodemon": "^2.0.15"
 	}
 }
