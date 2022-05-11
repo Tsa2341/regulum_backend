@@ -22,8 +22,6 @@ module.exports = (sequelize, DataTypes) => {
 				id: undefined,
 				password: undefined,
 				token: undefined,
-				createdAt: undefined,
-				updatedAt: undefined,
 			};
 		}
 	}
@@ -50,6 +48,11 @@ module.exports = (sequelize, DataTypes) => {
 			given_name: DataTypes.STRING,
 			nationality: DataTypes.STRING,
 			occupation: DataTypes.STRING,
+			profile_image: {
+				type: DataTypes.STRING,
+				defaultValue:
+					'https://res.cloudinary.com/demo/image/upload/v1570979139/eneivicys42bq5f2jpn2.jpg',
+			},
 			age: DataTypes.INTEGER,
 			valid: {
 				type: DataTypes.BOOLEAN,

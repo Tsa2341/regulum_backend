@@ -17,6 +17,8 @@ module.exports = {
 					given_name: 'admin',
 					nationality: 'Rwanda',
 					occupation: 'admin',
+					profile_image:
+						'https://res.cloudinary.com/demo/image/upload/v1570979139/eneivicys42bq5f2jpn2.jpg',
 					age: 30,
 					valid: true,
 					token: null,

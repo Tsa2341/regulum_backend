@@ -2,8 +2,11 @@ import UserServices from '../services/user.services';
 import crypto from 'crypto';
 import sendEmail from '../utils/emailSender';
 import { hashPassword, verifyPassword } from '../utils/passwordSecurity';
-import { generateToken, verifyToken } from '../utils/user.util';
+import { generateToken, verifyEmailTemplate, verifyToken } from '../utils/user.util';
 import RandomServices from '../services/random.services';
+import cloudinary from 'cloudinary';
+import main from '../utils/nodemailer.utils';
+import { emailTemplate } from '../utils/email.utils';
 
 export default class UserControllers {
 	constructor() {
@@ -49,18 +52,28 @@ export default class UserControllers {
 		try {
 			const { password, email } = req.body;
 
+			if (req.file) {
+				console.log(req.file);
+				const response = await cloudinary.v2.uploader.upload(req.file.path, {
+					folder: 'regulum',
+				});
+
+				req.body['profile_image'] = response.url;
+			}
+
 			const token = crypto.randomBytes(32).toString('hex');
 
-			await sendEmail(
-				email,
-				'Email verification for regulum',
-				`${process.env.BASE_URL}:${process.env.PORT}/api/v1/users/verify/${email}/${token}`,
+			await main(
+				req.body.email,
+				'Verify email',
+				'Verify email your email to continue',
+				emailTemplate(`${process.env.BASE_URL}/api/v1/users/verify/${email}/${token}`),
 			);
 
 			req.body.password = hashPassword(password);
 			req.body.token = token;
 
-			new UserServices().createUser(req.body, res);
+			await new UserServices().createUser(req.body, res);
 		} catch (error) {
 			res.status(500).json({
 				message: error.message || 'An unexpected error occurred',
@@ -73,8 +86,7 @@ export default class UserControllers {
 		const { email, password } = req.body;
 
 		const validUser = await new UserServices().getUser({ email }, res);
-		const passMatch =
-			validUser && verifyPassword(password, validUser.password);
+		const passMatch = validUser && verifyPassword(password, validUser.password);
 
 		if (!validUser || !passMatch) {
 			return res.status(401).json({
@@ -85,7 +97,7 @@ export default class UserControllers {
 				message: `Email not verified, please use the link sent to your email if not reregister the account`,
 			});
 		} else {
-			const token = await generateToken(email, validUser.id, '7 days');
+			const token = await generateToken(email, validUser.id);
 
 			return res
 				.status(200)
@@ -168,10 +180,7 @@ export default class UserControllers {
 	// Update user data
 	async upateUser(req, res) {
 		try {
-			const updatedUser = await new UserServices().updateUser(
-				req.body,
-				req.user.id,
-			);
+			const updatedUser = await new UserServices().updateUser(req.body, req.user.id);
 
 			return res.status(200).json({
 				message: 'Updated user successfully',

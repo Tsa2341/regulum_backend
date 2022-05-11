@@ -1,11 +1,8 @@
 import express from 'express';
+import upload from '../../utils/multer.utils';
 import UserControllers from '../../controllers/user.controller';
 import { verifyEmailExist } from '../../middlewares/user.middleware';
-import {
-	registerValidation,
-	updateValidation,
-} from '../../validations/user.validation';
-import { verifyToken } from '../../utils/user.util';
+import { registerValidation, updateValidation } from '../../validations/user.validation';
 import authenticate from '../../middlewares/authenticate.middleware';
 import { checkSuperAdmin } from '../../middlewares/checks.middleware';
 
@@ -19,6 +16,7 @@ routes.get('/verify/:email/:token', userControllers.verifyEmail);
 
 routes.post(
 	'/register',
+	upload.single('image'),
 	registerValidation,
 	verifyEmailExist,
 	userControllers.createUser,

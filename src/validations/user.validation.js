@@ -16,9 +16,7 @@ export const registerValidation = (req, res, next) => {
 	const isValid = registerSchema.validate(req.body);
 
 	if (isValid.error)
-		return res
-			.status(406)
-			.json({ message: isValid.error.message.replace(/["'`]/gi, '') });
+		return res.status(400).json({ message: isValid.error.message.replace(/["'`]/gi, '') });
 
 	next();
 };
@@ -36,9 +34,7 @@ export const updateValidation = (req, res, next) => {
 	const isValid = updateSchema.validate(req.body);
 
 	if (isValid.error)
-		return res
-			.status(406)
-			.json({ message: isValid.error.message.replace(/["'`]/gi, '') });
+		return res.status(400).json({ message: isValid.error.message.replace(/["'`]/gi, '') });
 
 	next();
 };

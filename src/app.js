@@ -33,7 +33,7 @@ try {
 	});
 
 	app.listen(port, async () => {
-		console.log('app running on port 3000');
+		console.log('app running on port ' + port);
 		await sequelize.authenticate().then((err) => {
 			if (err) return console.log('database connection failed');
 			console.log('connected to the database');

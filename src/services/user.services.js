@@ -1,5 +1,6 @@
 import { User, User_Group, Group } from '../database/models';
 import crypto from 'crypto';
+import { generateToken } from '../utils/user.util';
 
 export default class UserServices {
 	async getUser(data) {
@@ -18,10 +19,11 @@ export default class UserServices {
 
 	async createUser(data, res) {
 		try {
-			const newUser = await User.create(data);
-			return res
-				.status(201)
-				.json({ essage: 'created user successfully' });
+			await User.create(data);
+
+			return res.status(201).json({
+				message: 'created user successfully',
+			});
 		} catch (error) {
 			return res.status(406).json({
 				message: error.message || "user couldn't be created",
@@ -32,14 +34,7 @@ export default class UserServices {
 	async updateUser(data, id) {
 		const updateUser = await User.findOne({ id });
 
-		const {
-			username,
-			family_name,
-			given_name,
-			nationality,
-			occupation,
-			age,
-		} = data;
+		const { username, family_name, given_name, nationality, occupation, age } = data;
 
 		updateUser.username = username || updateUser.username;
 		updateUser.family_name = family_name || updateUser.family_name;

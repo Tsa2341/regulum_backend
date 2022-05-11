@@ -28,24 +28,17 @@ generateKeyPair(
 		try {
 			accessSync(path.join(__dirname, '../../keys/privateKey.text'));
 		} catch (error) {
-			appendFileSync(
-				path.join(__dirname, '../../keys/privateKey.text'),
-				privateKey,
-			);
+			appendFileSync(path.join(__dirname, '../../keys/privateKey.text'), privateKey);
 		}
 	},
 );
 
-export const generateToken = async (email, id, expiresIn) => {
-	const key = readFileSync(
-		path.join(__dirname, '../../keys/privateKey.text'),
-	);
-	return sign({ email, id }, key.toString('ascii'), { expiresIn });
+export const generateToken = async (email, id) => {
+	const key = readFileSync(path.join(__dirname, '../../keys/privateKey.text'));
+	return sign({ email, id }, key.toString('ascii'));
 };
 
 export const verifyToken = async (token) => {
-	const key = readFileSync(
-		path.join(__dirname, '../../keys/privateKey.text'),
-	);
+	const key = readFileSync(path.join(__dirname, '../../keys/privateKey.text'));
 	return verify(token, key.toString('ascii'));
 };

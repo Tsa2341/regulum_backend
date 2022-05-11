@@ -36,6 +36,11 @@ module.exports = {
 			age: {
 				type: DataTypes.INTEGER,
 			},
+			profile_image: {
+				type: DataTypes.STRING,
+				defaultValue:
+					'https://res.cloudinary.com/demo/image/upload/v1570979139/eneivicys42bq5f2jpn2.jpg',
+			},
 			valid: {
 				type: DataTypes.BOOLEAN,
 				defaultValue: false,
