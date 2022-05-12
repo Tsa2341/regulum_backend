@@ -11,7 +11,6 @@ export default class AdminControllers {
 				user_role,
 			});
 
-			console.log(adminExist);
 			if (adminExist) {
 				return res.status(409).json({
 					message: `User with role ${user_role} already exist in the group`,

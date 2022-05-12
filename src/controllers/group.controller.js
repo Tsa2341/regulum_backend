@@ -14,7 +14,6 @@ export default class GroupController {
 				data: group,
 			});
 		} catch (error) {
-			console.log(error);
 			return res.status(500).json({
 				message: 'An unexpected error occured',
 				error: error.message && error.message.replace(/[`'"]+/gi, ''),
@@ -87,10 +86,7 @@ export default class GroupController {
 				});
 			}
 
-			const updatedGroup = await new GroupServices().updateGroup(
-				req.body,
-				req.params.id,
-			);
+			const updatedGroup = await new GroupServices().updateGroup(req.body, req.params.id);
 
 			return res.status(200).json({
 				message: 'Updated group data successfully',

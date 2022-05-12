@@ -53,7 +53,6 @@ export default class UserControllers {
 			const { password, email } = req.body;
 
 			if (req.file) {
-				console.log(req.file);
 				const response = await cloudinary.v2.uploader.upload(req.file.path, {
 					folder: 'regulum',
 				});

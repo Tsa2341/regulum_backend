@@ -25,8 +25,6 @@ export default async function sendEmail(senderEmail, subject, Url) {
 
 		const res = await sgMail.send(msg);
 
-		console.log(res);
-
 		return res;
 	} catch (error) {
 		throw "couldn't send the verification email";
