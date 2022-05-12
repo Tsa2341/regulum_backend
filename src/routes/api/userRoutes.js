@@ -2,7 +2,11 @@ import express from 'express';
 import upload from '../../utils/multer.utils';
 import UserControllers from '../../controllers/user.controller';
 import { verifyEmailExist } from '../../middlewares/user.middleware';
-import { registerValidation, updateValidation } from '../../validations/user.validation';
+import {
+	loginValidation,
+	registerValidation,
+	updateValidation,
+} from '../../validations/user.validation';
 import authenticate from '../../middlewares/authenticate.middleware';
 import { checkSuperAdmin } from '../../middlewares/checks.middleware';
 
@@ -21,7 +25,7 @@ routes.post(
 	verifyEmailExist,
 	userControllers.createUser,
 );
-routes.post('/login', registerValidation, userControllers.loginUser);
+routes.post('/login', loginValidation, userControllers.loginUser);
 routes.post('/logout', authenticate, userControllers.logoutUser);
 
 routes.patch('/', updateValidation, authenticate, userControllers.upateUser);
