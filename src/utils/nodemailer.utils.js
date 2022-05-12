@@ -5,6 +5,9 @@ export default async function main(receiver, subject, text, html) {
 	console.log(process.env.EMAIL_USER, process.env.EMAIL_PASSWORD);
 
 	const transporter = nodemailer.createTransport({
+		host: 'smtp.gmail.com',
+		port: 465,
+		secure: true,
 		service: 'gmail',
 		auth: {
 			user: process.env.EMAIL_USER,
