@@ -25,10 +25,10 @@ routes.post(
 	verifyEmailExist,
 	userControllers.createUser,
 );
-routes.post('/login', loginValidation, userControllers.loginUser);
-routes.post('/logout', authenticate, userControllers.logoutUser);
+routes.post('/login', upload.none(), loginValidation, userControllers.loginUser);
+routes.post('/logout', upload.none(), authenticate, userControllers.logoutUser);
 
-routes.patch('/', updateValidation, authenticate, userControllers.upateUser);
+routes.patch('/', upload.none(), updateValidation, authenticate, userControllers.upateUser);
 
 routes.delete('/', authenticate, userControllers.deleteUser);
 
