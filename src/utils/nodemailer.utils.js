@@ -12,17 +12,19 @@ export default async function main(receiver, subject, text, html) {
 		},
 	});
 
-	const info = await transporter.sendMail({
-		sender: 'regulum',
-		from: {
-			name: 'regulum',
-			address: process.env.EMAIL_USER,
-		},
-		to: receiver,
-		subject: subject,
-		text: text,
-		html: html,
-	});
+	const info = await transporter
+		.sendMail({
+			sender: 'regulum',
+			from: {
+				name: 'regulum',
+				address: process.env.EMAIL_USER,
+			},
+			to: receiver,
+			subject: subject,
+			text: text,
+			html: html,
+		})
+		.catch(console.error);
 
 	console.log('Message sent: %s', info.messageId);
 
