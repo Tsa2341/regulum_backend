@@ -20,15 +20,15 @@ routes.get('/verify/:email/:token', userControllers.verifyEmail);
 
 routes.post(
 	'/register',
-	upload.single('image'),
 	registerValidation,
+	upload.single('image'),
 	verifyEmailExist,
 	userControllers.createUser,
 );
-routes.post('/login', upload.none(), loginValidation, userControllers.loginUser);
+routes.post('/login', loginValidation, upload.none(), userControllers.loginUser);
 routes.post('/logout', upload.none(), authenticate, userControllers.logoutUser);
 
-routes.patch('/', upload.none(), updateValidation, authenticate, userControllers.upateUser);
+routes.patch('/', updateValidation, upload.none(), authenticate, userControllers.upateUser);
 
 routes.delete('/', authenticate, userControllers.deleteUser);
 

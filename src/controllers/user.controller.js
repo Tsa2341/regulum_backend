@@ -87,8 +87,11 @@ export default class UserControllers {
 
 		const validUser = await new UserServices().getUser({ email }, res);
 		const passMatch = validUser && verifyPassword(password, validUser.password);
-
-		if (!validUser || !passMatch) {
+		if (!validUser) {
+			return res.status(401).json({
+				message: `User with Email ${email} doesn't exist`,
+			});
+		} else if (!passMatch) {
 			return res.status(401).json({
 				message: `Invalid credentials`,
 			});
